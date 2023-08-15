@@ -142,7 +142,7 @@ img {
     grid-area: button;
 }
 
-.header__button button {
+.header__button>button {
     display: flex;
     gap: 0.3rem;
     align-items: center;
@@ -161,7 +161,7 @@ img {
 }
 
 /* Header -> Navigation */
-.header__nav ul {
+ul {
     list-style-type: none;
     display: flex;
     gap: 1rem;
@@ -169,16 +169,16 @@ img {
     padding: 0;
 }
 
-.header__nav ul a {
+ul a {
     padding: 10px;
     text-decoration: none;
 }
 
-.header__nav ul a.active {
+ul a.active {
     color: #7E7E7E;
 }
 
-.header__nav ul a:hover {
+ul a:hover {
     text-decoration: underline;
 }
 
