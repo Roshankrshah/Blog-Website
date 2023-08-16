@@ -7,6 +7,8 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const adminLayout = '../views/layouts/admin';
+
 // Check Login
 const authMiddleware = (req,res,next)=>{
     const token = req.cookies.token;
@@ -23,7 +25,7 @@ const authMiddleware = (req,res,next)=>{
     }
 }
 
-const adminLayout = '../views/layouts/admin';
+
 //GET Admin Login Page
 router.get('/admin', async (req, res) => {
     try {
@@ -105,7 +107,6 @@ router.get('/dashboard',authMiddleware,async(req,res)=>{
     }catch(error){
         console.log(error);
     }
-    res.render('admin/dashboard');
 });
 
 //GET Create New Post
