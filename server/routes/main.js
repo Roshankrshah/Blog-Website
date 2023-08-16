@@ -27,7 +27,8 @@ router.get('', async (req, res) => {
       locals,
       data,
       current: page,
-      nextPage: hasNextPage ? nextPage : null
+      nextPage: hasNextPage ? nextPage : null,
+      currentRoute: '/'
     });
   } catch (error) {
     console.log(error);
@@ -87,15 +88,15 @@ insertPostData();*/
 
 router.get('/post/:id', async (req, res) => {
   try {
-    
+
     let slug = req.params.id;
 
-    const data = await Post.findById({_id:slug});
+    const data = await Post.findById({ _id: slug });
     const locals = {
       title: data.title,
       description: 'Simple Blog created with Nodejs, Express and MongoDB'
     };
-    res.render('post',{locals,data})
+    res.render('post', { locals, data, currentRoute: `/post/${slug}` })
   } catch (error) {
     console.log(error);
   }
@@ -104,30 +105,47 @@ router.get('/post/:id', async (req, res) => {
 
 //POST search
 
-router.post('/search',async (req,res)=>{
-  try{
+router.post('/search', async (req, res) => {
+  try {
     const locals = {
       title: "Search",
       description: 'Simple Blog created with Nodejs, Express and MongoDB'
     };
 
     let searchTerm = req.body.searchTerm;
-    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g,"");
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g, "");
 
     const data = await Post.find({
       $or: [
-        {title: {$regex: new RegExp(searchNoSpecialChar,'i')}},
-        {body: {$regex: new RegExp(searchNoSpecialChar,'i')}},
+        { title: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
+        { body: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
       ]
     });
 
-    res.render("search",{
+    res.render("search", {
       data,
-      locals
+      locals,
+      currentRoute: '/'
     });
-  }catch(error){
+  } catch (error) {
     console.log(error);
   }
 });
 
+//GET About
+
+router.get('/about', (req, res) => {
+  res.render('about', {
+    currentRoute: '/about'
+  });
+});
+
+
+//GET Contact
+
+router.get('/contact', (req, res) => {
+  res.render('contact', {
+    currentRoute: '/contact'
+  });
+});
 module.exports = router;
